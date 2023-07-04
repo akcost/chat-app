@@ -28,8 +28,18 @@ class _AuthScreenState extends State<AuthScreen> {
   void _submit() async {
     final isValid = _form.currentState!.validate();
 
-    if (!isValid || !_isLogin && _selectedImage == null) {
-      // show error message ...
+    if (!isValid) {
+      return;
+    }
+
+    FocusScope.of(context).unfocus();
+
+    if (!_isLogin && _selectedImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please add an image.'),
+        ),
+      );
       return;
     }
 
@@ -39,7 +49,7 @@ class _AuthScreenState extends State<AuthScreen> {
         _isAuthenticating = true;
       });
       if (_isLogin) {
-        final userCredentials = _firebase.signInWithEmailAndPassword(
+        final userCredentials = await _firebase.signInWithEmailAndPassword(
           email: _enteredEmail,
           password: _enteredPassword,
         );
@@ -63,21 +73,31 @@ class _AuthScreenState extends State<AuthScreen> {
             .doc(userCredentials.user!.uid)
             .set(
           {
-            "userName": _enteredUsername,
+            "username": _enteredUsername,
             "email": _enteredEmail,
             "image_url": imageUrl,
           },
         );
       }
     } on FirebaseAuthException catch (error) {
+      print("Catching an error");
+      String errorMessage = "Authentication failed.";
       if (error.code == "email-already-in-use") {
-        // ...
+        errorMessage = "Email already in use. Please try another one.";
+      }
+
+      if (error.code == "user-not-found") {
+        errorMessage = "User not found. Please check your email address.";
+      }
+
+      if (error.code == "wrong-password") {
+        errorMessage = "The entered password was incorrect.";
       }
 
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(error.message ?? "Authentication failed."),
+          content: Text(errorMessage),
         ),
       );
 

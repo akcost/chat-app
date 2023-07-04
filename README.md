@@ -1,16 +1,26 @@
-# chat_app
+# Chat App
 
-Chat application
+This is a simple chat app built with Flutter, Firebase, and Firebase Authentication. The app allows users to register, log in, and participate in a single chat room where they can exchange messages with other users.
+
+## Features
+
+- User Registration: Users can create an account by providing their email and password. They can also upload a profile image during registration.
+- User Login: Registered users can log in using their email and password.
+- Chat Room: Once logged in, users can access the chat room where they can send and receive messages from other users.
+- Form Validation: The app performs form validation to ensure that users enter valid and complete information during registration and login.
+- Authentication Error Handling: The app handles authentication errors, such as incorrect credentials or user not found, and provides appropriate feedback to the user.
+
+## Dependencies
+
+- Flutter: The app is built using the Flutter framework.
+- Firebase: The app utilizes Firebase as the backend platform.
+- Firebase Authentication: Used for user registration and login.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To run the app on your local machine, follow these steps:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Clone the repository.
+2. Set up a Firebase project and enable Firebase Authentication.
+3. Update the necessary Firebase configuration files in the app.
+4. Run the app using Flutter CLI or your preferred IDE.
